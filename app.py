@@ -20,3 +20,12 @@ if app.config["SQLALCHEMY_DATABASE_URI"].startswith("postgres://"):
 # using flask login in order to manage the users logging in to the site
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+@app.route("/")
+def index():
+
+    return flask.render_template("index.html")
+
+
+app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True)
