@@ -6,20 +6,20 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = flask.Flask(__name__)
 
-# Point SQLAlchemy to your Heroku database
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-# Gets rid of a warning
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# # Point SQLAlchemy to your Heroku database
+# app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+# # Gets rid of a warning
+# app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-# loop in order to change the config variables for the heroku app to access the database
-if app.config["SQLALCHEMY_DATABASE_URI"].startswith("postgres://"):
-    app.config["SQLALCHEMY_DATABASE_URI"] = app.config[
-        "SQLALCHEMY_DATABASE_URI"
-    ].replace("postgres://", "postgresql://")
+# # loop in order to change the config variables for the heroku app to access the database
+# if app.config["SQLALCHEMY_DATABASE_URI"].startswith("postgres://"):
+#     app.config["SQLALCHEMY_DATABASE_URI"] = app.config[
+#         "SQLALCHEMY_DATABASE_URI"
+#     ].replace("postgres://", "postgresql://")
 
-# using flask login in order to manage the users logging in to the site
-login_manager = LoginManager()
-login_manager.init_app(app)
+# # using flask login in order to manage the users logging in to the site
+# login_manager = LoginManager()
+# login_manager.init_app(app)
 
 
 @app.route("/")
