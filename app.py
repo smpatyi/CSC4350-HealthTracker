@@ -21,9 +21,9 @@ if app.config["SQLALCHEMY_DATABASE_URI"].startswith("postgres://"):
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @app.route("/")
 def index():
-
     return flask.render_template("index.html")
 
 
