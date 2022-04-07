@@ -10,6 +10,7 @@ from flask_login import (
 )
 from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
+from passlib.hash import sha256_crypt
 
 app = flask.Flask(__name__)
 
@@ -63,7 +64,7 @@ class UserInfo(db.Model):
 
 db.create_all()
 
-
+# login page (what user sees when they open app)
 @app.route("/")
 def index():
     return flask.render_template(
@@ -71,23 +72,24 @@ def index():
     )
 
 
+# handles login logic to log user into app
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if flask.request.method == "POST":
         login_username = flask.request.form.get("username")
         login_password = flask.request.form.get("password")
-        user = (
-            UserLogin.query.filter_by(username=login_username).first()
-            and UserLogin.query.filter_by(password=login_password).first()
-        )
+        password_to_verify = sha256_crypt.verify(login_password, login_password)
+        user = UserLogin.query.filter_by(username=login_username).first()
         if user:
-            login_user(user)
-            return flask.redirect("/main")
+            if password_to_verify:
+                login_user(user)
+                return flask.redirect("/main")
         else:
-            flask.flash("No account found with that username. Please sign up!")
+            flask.flash("No account found with that username. Please sign up.")
             return flask.redirect("/signup_form")
 
 
+# register page
 @app.route("/signup_form")  # Displays sign up page
 def signup_form():
     return flask.render_template(
@@ -95,6 +97,7 @@ def signup_form():
     )
 
 
+# handles signup logic to create an account for user
 @app.route("/signup", methods=["GET", "POST"])  # Handles user input for sign up page
 def signup():
     if flask.request.method == "POST":
@@ -106,7 +109,10 @@ def signup():
             return flask.redirect("/")
         else:
             password_input = flask.request.form.get("password")
-            db.session.add(UserLogin(username=username_input, password=zzzzzz))
+            password_encrypted = sha256_crypt.encrypt(password_input)
+            db.session.add(
+                UserLogin(username=username_input, password=password_encrypted)
+            )
             db.session.add(
                 UserInfo(
                     username=username_input,
@@ -117,16 +123,18 @@ def signup():
                 )
             )
             db.session.commit()
-            flask.flash("Account created. Please login!")
+            flask.flash("Account created. Please login.")
             return flask.redirect("/")
 
 
+# page user sees when they have been logged into app
 @app.route("/main", methods=["GET", "POST"])
 @login_required
 def main():
     return flask.render_template("index.html")
 
 
+# handles logic to log user out of app
 @app.route("/logout", methods=["GET", "POST"])
 @login_required
 def logout():
