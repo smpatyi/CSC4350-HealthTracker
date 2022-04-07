@@ -14,12 +14,13 @@
         {% endif %}
         {% endwith %}
         <br>
-        Enter username and password to login
+        Enter your username and password to login
         <form method="POST" action="/login">
-            <input type="text" name="username" placeholder="Enter your username" size="25">
             <br>
-            <input type="text" name="password" placeholder="Enter your password" size="25">
-            <br>
+            <input type="text" name="username" placeholder="Enter your username" size="20">
+            <br><br>
+            <input type="text" name="password" placeholder="Enter your password" size="20">
+            <br><br>
             <input type="submit" value="Login">
         </form>
         If you have no account yet, please <a href="{{url_for('signup_form')}}">sign up</a>
