@@ -77,13 +77,19 @@ def index():
 def login():
     if flask.request.method == "POST":
         login_username = flask.request.form.get("username")
-        login_password = flask.request.form.get("password")
-        password_to_verify = sha256_crypt.verify(login_password, login_password)
         user = UserLogin.query.filter_by(username=login_username).first()
         if user:
-            if password_to_verify:
+            if sha256_crypt.verify(
+                flask.request.form.get("password"),
+                UserLogin.query.filter_by(username=flask.request.form.get("username"))
+                .first()
+                .password,
+            ):
                 login_user(user)
                 return flask.redirect("/main")
+            else:
+                flask.flash("No account found with that username. Please sign up.")
+                return flask.redirect("/signup_form")
         else:
             flask.flash("No account found with that username. Please sign up.")
             return flask.redirect("/signup_form")
