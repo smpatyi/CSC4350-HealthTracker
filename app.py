@@ -11,6 +11,7 @@ from flask_login import (
 from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
+import re
 
 app = flask.Flask(__name__)
 
@@ -132,6 +133,40 @@ def signup():
             flask.flash("Account created. Please login.")
             return flask.redirect("/")
 
+# page to add new data to database
+@app.route("/input_data", methods=["GET", "POST"])
+@login_required
+def input_data():
+    return flask.render_template("input_data.html")
+
+# adds the new data to the database
+@app.route("/add_new_data", methods=["POST"])
+@login_required
+def add_new_data():
+    user = current_user.username
+    user_info = UserInfo.query.filter_by(username=user).first()
+
+    regex = re.compile("^[0-9]+\'[0-9]+\'\'$")
+    if not regex.match(flask.request.form.get("height")):
+        flask.flash("height value not viable")
+        return flask.render_template("input_data.html")
+
+    regex = re.compile("^[0-9]+$")
+    if not regex.match(flask.request.form.get("weight")):
+        flask.flash("weight value not viable")
+        return flask.render_template("input_data.html")
+    
+    db.session.add(
+        UserInfo(
+            username=user,
+            first_name=user_info.first_name,
+            last_name=user_info.last_name,
+            height=flask.request.form.get("height"),
+            weight=flask.request.form.get("weight"),
+        )
+    )
+    flask.flash("Added!")
+    return flask.render_template("input_data.html")
 
 # page user sees when they have been logged into app
 @app.route("/main", methods=["GET", "POST"])
