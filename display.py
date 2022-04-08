@@ -1,11 +1,4 @@
-#from plotly.offline import plot
-#from plotly.graph_objs import Scatter
-#import plotly.graph_objects as go
 import plotly.express as px
-
-def display_test():
-    test = plot([Scatter(x=[1, 2, 3], y=[3, 1, 6])], output_type='div')
-    return test
 
 def BMI(weight, height_string):
     height_string = height_string.rstrip("''")

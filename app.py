@@ -1,4 +1,3 @@
-from posixpath import split
 import flask
 import os
 from flask_login import (
@@ -14,8 +13,6 @@ from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
 import re
 import display
-
-from pkg_resources import split_sections
 
 app = flask.Flask(__name__)
 
