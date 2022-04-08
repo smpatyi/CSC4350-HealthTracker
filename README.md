@@ -6,3 +6,5 @@ To run the project properly, clone all the files and make sure to install a coup
 * `pip3 install passlib`
 * `run the app.py to run the web app`
 * `pip3 install -r requirements.txt`
+* `pip3 install plotly==5.7.0`
+* `pip3 install pandas`
