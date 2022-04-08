@@ -5,3 +5,4 @@ flask-login
 Flask-SQLAlchemy
 psycopg2
 passlib
+plotly

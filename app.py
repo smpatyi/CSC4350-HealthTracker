@@ -1,3 +1,4 @@
+from posixpath import split
 import flask
 import os
 from flask_login import (
@@ -12,6 +13,9 @@ from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
 import re
+import display
+
+from pkg_resources import split_sections
 
 app = flask.Flask(__name__)
 
@@ -165,6 +169,7 @@ def add_new_data():
             weight=flask.request.form.get("weight"),
         )
     )
+    db.session.commit()
     flask.flash("Added!")
     return flask.render_template("input_data.html")
 
@@ -172,7 +177,14 @@ def add_new_data():
 @app.route("/main", methods=["GET", "POST"])
 @login_required
 def main():
-    return flask.render_template("index.html")
+    user = current_user.username
+    user_info = UserInfo.query.filter_by(username=user).all()
+    return flask.render_template(
+        "index.html",
+        BMI = display.bmi_display(user_info),
+        weight = display.weight_display(user_info),
+        height = display.height_display(user_info)
+        )
 
 
 # handles logic to log user out of app

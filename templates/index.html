@@ -6,6 +6,18 @@
 
 <body>
     <a href="{{url_for('input_data')}}">Add Data</a>
+    <h1>Hello {{current_user.username}}</h1>
+    <div class="graph">
+        <div class="column">
+            {{BMI|safe}}
+        </div>
+        <div class="column">
+            {{height|safe}}
+        </div>
+        <div class="column">
+            {{weight|safe}}
+        </div>
+    </div>
     <form method="POST" action="/logout">
         <p align="right">
             <input type="submit" value="Logout">
