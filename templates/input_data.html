@@ -1,23 +1,30 @@
 <html>
+
 <head>
     <link rel="stylesheet" href="/static/style.css" />
 </head>
+
 <body>
     {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                {{message}}
-            {% endfor %}
-        {% endif %}
+    {% if messages %}
+    {% for message in messages %}
+    {{message}}
+    {% endfor %}
+    {% endif %}
     {% endwith %}
-    <form method="POST" action="/add_new_data">
-        <br>
-        Enter your height (Ex: 5'10"): <input type="text" name="height" size="6">
-        <br><br>
-        Enter your weight (lb): <input type="text" name="weight" maxlength="3" size="6">
-        <br><br>
-        <input type="submit" value="Add">
-    </form>
-    <a href="{{url_for('main')}}">Return</a>
+    <center>
+        <form method="POST" action="/add_new_data">
+            <br>
+            Enter your updated height (Ex: 5'10): <input type="text" name="height" size="6">
+            <br><br>
+            Enter your updated weight (lb): <input type="text" name="weight" maxlength="3" size="6">
+            <br><br>
+            <input type="submit" value="Add">
+        </form>
+        <form method="POST" action="/main">
+            <input type="submit" value="Return to main page">
+        </form>
+    </center>
 </body>
+
 </html>
