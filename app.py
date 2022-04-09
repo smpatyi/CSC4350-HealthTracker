@@ -180,11 +180,13 @@ def add_new_data():
 def main():
     user = current_user.username
     user_info = UserInfo.query.filter_by(username=user).all()
+    user_info_firstName = UserInfo.query.filter_by(username=user).first().first_name
     return flask.render_template(
         "index.html",
         BMI=display.bmi_display(user_info),
         weight=display.weight_display(user_info),
         height=display.height_display(user_info),
+        first_name=user_info_firstName,
     )
 
 
