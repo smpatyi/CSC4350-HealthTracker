@@ -134,11 +134,14 @@ def signup():
             flask.flash("Account created. Please login.")
             return flask.redirect("/")
 
+
 # page to add new data to database
 @app.route("/input_data", methods=["GET", "POST"])
 @login_required
 def input_data():
-    return flask.render_template("input_data.html")
+    if flask.request.method == "POST":
+        return flask.render_template("input_data.html")
+
 
 # adds the new data to the database
 @app.route("/add_new_data", methods=["POST"])
@@ -147,7 +150,7 @@ def add_new_data():
     user = current_user.username
     user_info = UserInfo.query.filter_by(username=user).first()
 
-    regex = re.compile("^[0-9]+\'[0-9]+\'\'$")
+    regex = re.compile("^[0-9]+'[0-9]+''$")
     if not regex.match(flask.request.form.get("height")):
         flask.flash("height value not viable")
         return flask.render_template("input_data.html")
@@ -156,7 +159,7 @@ def add_new_data():
     if not regex.match(flask.request.form.get("weight")):
         flask.flash("weight value not viable")
         return flask.render_template("input_data.html")
-    
+
     db.session.add(
         UserInfo(
             username=user,
@@ -170,6 +173,7 @@ def add_new_data():
     flask.flash("Added!")
     return flask.render_template("input_data.html")
 
+
 # page user sees when they have been logged into app
 @app.route("/main", methods=["GET", "POST"])
 @login_required
@@ -178,10 +182,10 @@ def main():
     user_info = UserInfo.query.filter_by(username=user).all()
     return flask.render_template(
         "index.html",
-        BMI = display.bmi_display(user_info),
-        weight = display.weight_display(user_info),
-        height = display.height_display(user_info)
-        )
+        BMI=display.bmi_display(user_info),
+        weight=display.weight_display(user_info),
+        height=display.height_display(user_info),
+    )
 
 
 # handles logic to log user out of app
