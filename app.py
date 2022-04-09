@@ -14,6 +14,7 @@ from flask_login import (
 from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
+import display
 
 app = flask.Flask(__name__)
 
@@ -157,7 +158,8 @@ def signup():
 @app.route("/input_data", methods=["GET", "POST"])
 @login_required
 def input_data():
-    return flask.render_template("input_data.html")
+    if flask.request.method == "POST":
+        return flask.render_template("input_data.html")
 
 
 # adds the new data to the database
@@ -167,7 +169,7 @@ def add_new_data():
     user = current_user.username
     user_info = UserInfo.query.filter_by(username=user).first()
 
-    regex = re.compile("^[0-9]+'[0-9]+''$")
+    regex = re.compile("^[0-9]+'[0-9]+$")
     if not regex.match(flask.request.form.get("height")):
         flask.flash("height value not viable")
         return flask.render_template("input_data.html")
@@ -186,6 +188,7 @@ def add_new_data():
             weight=flask.request.form.get("weight"),
         )
     )
+    db.session.commit()
     flask.flash("Added!")
     return flask.render_template("input_data.html")
 
@@ -194,7 +197,16 @@ def add_new_data():
 @app.route("/main", methods=["GET", "POST"])
 @login_required
 def main():
-    return flask.render_template("index.html")
+    user = current_user.username
+    user_info = UserInfo.query.filter_by(username=user).all()
+    user_info_firstName = UserInfo.query.filter_by(username=user).first().first_name
+    return flask.render_template(
+        "index.html",
+        BMI=display.bmi_display(user_info),
+        weight=display.weight_display(user_info),
+        height=display.height_display(user_info),
+        first_name=user_info_firstName,
+    )
 
 
 # handles logic to log user out of app
@@ -205,4 +217,7 @@ def logout():
     return flask.redirect("/")
 
 
-app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True)
+if __name__ == "__main__":
+    app.run(
+        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True
+    )

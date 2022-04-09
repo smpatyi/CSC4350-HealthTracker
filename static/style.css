@@ -21,3 +21,20 @@ body {
 h1 {
   text-align-last: center;
 }
+
+h2 {
+  color: midnightblue;
+}
+
+.graph {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.column {
+  float: left;
+  height: 500px;
+  width: 500;
+  padding: 5px;
+}

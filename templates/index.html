@@ -5,12 +5,30 @@
 </head>
 
 <body>
-    <a href="{{url_for('input_data')}}">Add Data</a>
     <form method="POST" action="/logout">
         <p align="right">
             <input type="submit" value="Logout">
         </p>
     </form>
+
+    <form method="POST" action="/input_data">
+        <input type="submit" value="Add Data">
+    </form>
+
+    <h1>
+        <center>Hello {{first_name}}</center>
+    </h1>
+    <div class="graph">
+        <div class="column">
+            {{BMI|safe}}
+        </div>
+        <div class="column">
+            {{height|safe}}
+        </div>
+        <div class="column">
+            {{weight|safe}}
+        </div>
+    </div>
 </body>
 
 </html>
