@@ -1,7 +1,7 @@
-**Link to Heroku App**
+**Link to Heroku App**: 
 https://csc4350-health-tracker.herokuapp.com/
 
-**Installation instructions**
+**Installation instructions**: 
 To run the project properly, clone all the files and make sure to install a couple of libraries by commands as follow
 * `sudo pip install flask`
 * `pip3 install python-dotenv`
