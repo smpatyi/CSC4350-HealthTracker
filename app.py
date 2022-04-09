@@ -150,7 +150,7 @@ def add_new_data():
     user = current_user.username
     user_info = UserInfo.query.filter_by(username=user).first()
 
-    regex = re.compile("^[0-9]+'[0-9]+''$")
+    regex = re.compile("^[0-9]+'[0-9]+$")
     if not regex.match(flask.request.form.get("height")):
         flask.flash("height value not viable")
         return flask.render_template("input_data.html")
