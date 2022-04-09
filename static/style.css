@@ -1,7 +1,23 @@
-h1 {
-    color: chartreuse;
+body {
+  background-color: #dfdfdf;
 }
 
-h2 {
-    color: midnightblue;
+.header {
+  padding: 30px;
+  background: #bffffb;
+  font-family: "Inter", sans-serif;
+  color: white;
+}
+
+.buttons {
+  text-align: right;
+}
+
+.welcome {
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+
+h1 {
+  text-align-last: center;
 }
