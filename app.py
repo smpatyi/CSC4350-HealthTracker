@@ -64,6 +64,12 @@ class UserInfo(db.Model):
     weight = db.Column(db.Integer, nullable=False)
 
 
+class Comments(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), nullable=False)
+    comment = db.Column(db.String(120), nullable=False)
+
+
 db.create_all()
 
 # login page (what user sees when they open app)
@@ -174,6 +180,29 @@ def add_new_data():
     return flask.render_template("input_data.html")
 
 
+# displays Chat Area page
+@app.route("/chatArea", methods=["GET", "POST"])
+@login_required
+def chatArea():
+    if flask.request.method == "POST":
+        all_comments = Comments.query.filter_by().all()
+        total_comments = len(all_comments)
+    return flask.render_template(
+        "chatSection.html", all_comments=all_comments, total_comments=total_comments
+    )
+
+
+# adds user comments to database once HTML form is filled out
+@app.route("/add_comment", methods=["POST"])
+@login_required
+def add_comment():
+    user = current_user.username
+    comment_input = flask.request.form.get("comment")
+    db.session.add(Comments(username=user, comment=comment_input))
+    db.session.commit()
+    return flask.redirect("/main")
+
+
 # page user sees when they have been logged into app
 @app.route("/main", methods=["GET", "POST"])
 @login_required
@@ -197,5 +226,8 @@ def logout():
     logout_user()
     return flask.redirect("/")
 
+
 if __name__ == "__main__":
-    app.run(host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True)
+    app.run(
+        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True
+    )
