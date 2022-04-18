@@ -1,5 +1,8 @@
-import flask
+# pylint: disable = missing-class-docstring, missing-function-docstring, missing-module-docstring, no-member
+
 import os
+import re
+import flask
 from flask_login import (
     LoginManager,
     UserMixin,
@@ -11,7 +14,6 @@ from flask_login import (
 from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
-import re
 import display
 
 app = flask.Flask(__name__)
@@ -72,9 +74,26 @@ class Comments(db.Model):
 
 db.create_all()
 
-# login page (what user sees when they open app)
+# welcome page (what user sees when they open app)
 @app.route("/")
 def index():
+    return flask.render_template(
+        "welcome.html",
+    )
+
+
+@app.route("/welcome", methods=["GET", "POST"])
+def welcome():
+    if flask.request.method == "POST":
+        if flask.request.form["button"] == "Login":
+            return flask.redirect(flask.url_for("user_login"))
+        if flask.request.form["button"] == "Sign up":
+            return flask.redirect(flask.url_for("signup_form"))
+
+
+# login page, appears when user tries to log in from the welcome page
+@app.route("/user_login")
+def user_login():
     return flask.render_template(
         "login.html",
     )
@@ -120,7 +139,7 @@ def signup():
             flask.flash(
                 "Account already exists with this username. Please login or choose a different username."
             )
-            return flask.redirect("/")
+            return flask.redirect("/user_login")
         else:
             password_input = flask.request.form.get("password")
             password_encrypted = sha256_crypt.encrypt(password_input)
@@ -138,7 +157,7 @@ def signup():
             )
             db.session.commit()
             flask.flash("Account created. Please login.")
-            return flask.redirect("/")
+            return flask.redirect("/user_login")
 
 
 # page to add new data to database

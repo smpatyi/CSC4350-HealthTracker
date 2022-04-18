@@ -1,38 +1,32 @@
 <html>
-
-<head>
+  <head>
     <link rel="stylesheet" href="/static/style.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <center>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        {{message}}
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-        <br>
-        Fill out form below to register an account
-        <form method="POST" action="/signup">
-            <br>
-            Enter a username: <input type="text" name="username" size="20">
-            <br><br>
-            Enter a password: <input type="text" name="password" size="20">
-            <br><br>
-            Enter your first name: <input type="text" name="first_name" size="12">
-            <br><br>
-            Enter your last name: <input type="text" name="last_name" size="12">
-            <br><br>
-            Enter your height (Ex: 5'10): <input type="text" name="height" size="6">
-            <br><br>
-            Enter your weight (lb): <input type="text" name="weight" maxlength="3" size="6">
-            <br><br>
-            <input type="submit" value="Register">
-        </form>
-        If you already have an account, please <a href="{{url_for('index')}}"> login</a>
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %} {{message}} {% endfor %} {% endif %} {% endwith %}
+      <br />
+      Fill out form below to register an account
+      <form method="POST" action="/signup">
+        <br />
+        Enter a username: <input type="text" name="username" size="20" />
+        <br /><br />
+        Enter a password: <input type="text" name="password" size="20" />
+        <br /><br />
+        Enter your first name:
+        <input type="text" name="first_name" size="12" /> <br /><br />
+        Enter your last name: <input type="text" name="last_name" size="12" />
+        <br /><br />
+        Enter your height (Ex: 5'10):
+        <input type="text" name="height" size="6" /> <br /><br />
+        Enter your weight (lb):
+        <input type="text" name="weight" maxlength="3" size="6" /> <br /><br />
+        <input type="submit" value="Register" />
+      </form>
+      If you already have an account, please
+      <a href="{{url_for('user_login')}}"> login</a>
     </center>
-</body>
-
+  </body>
 </html>

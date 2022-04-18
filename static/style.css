@@ -1,16 +1,38 @@
+body {
+  background-color: #dfdfdf;
+}
+
+.header {
+  padding: 30px;
+  background: #bffffb;
+  color: rgb(0, 0, 0);
+}
+
+.buttons {
+  text-align: right;
+}
+
+.welcome {
+  text-align: center;
+}
+
+h1 {
+  text-align-last: center;
+}
+
 h2 {
-    color: midnightblue;
+  color: midnightblue;
 }
 
 .graph {
-    content: "";
-    clear: both;
-    display: table
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .column {
-    float: left;
-    height: 500px;
-    width: 500;
-    padding: 5px;
+  float: left;
+  height: 500px;
+  width: 500;
+  padding: 5px;
 }
