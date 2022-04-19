@@ -1,0 +1,22 @@
+
+
+
+.graph {
+    content: "";
+    clear: both;
+    display: table
+}
+
+.column {
+    float: left;
+    height: 500px;
+    width: 500;
+    padding: 5px;
+}
+body{
+    background-image: url("../static/backgrounds/grape.jpg");
+    background-size:cover;
+    background-color:antiquewhite;
+    font-family: verdana;
+    cursor: pointer;
+}

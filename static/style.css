@@ -1,0 +1,32 @@
+h1 {
+    color: black;
+}
+
+
+.graph {
+    content: "";
+    clear: both;
+    display: table
+}
+
+.column {
+    float: left;
+    height: 500px;
+    width: 500;
+    padding: 5px;
+}
+body{
+    background-image: url("../static/backgrounds/balloon.jpg");
+    background-size:cover;
+    background-color:antiquewhite;
+    font-family: verdana;
+    cursor: pointer;
+}
+
+.ctn{
+
+    padding:8px 15px;
+    background-color: black;
+    border-radius: 30px;
+    color:whitesmoke;
+}

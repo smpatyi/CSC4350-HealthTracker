@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+    <form method="POST" action="/logout">
+        <p align="right">
+            <input type="submit" value="Logout">
+        </p>
+    </form>
+
+    <form method="POST" action="/input_data">
+        <input type="submit" value="Add Data">
+    </form>
+
+    <form method="POST" action="/health_tracker">
+        <input type="submit" value="Go to your health tracker">
+    </form>
+    
+    <h1>
+        <center>Welcome to Your Profile</center>
+        <center>Hello, {{first_name}}</center>
+        
+    </h1>
+    <div class="graph">
+        <div class="column">
+            {{BMI|safe}}
+        </div>
+        <div class="column">
+            {{height|safe}}
+        </div>
+        <div class="column">
+            {{weight|safe}}
+        </div>
+    </div>
+</body>
+
+</html>
