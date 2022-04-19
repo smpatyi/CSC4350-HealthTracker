@@ -15,12 +15,17 @@
         <input type="submit" value="Add Data">
     </form>
 
+    <form method="POST" action="/health_tracker">
+        <input type="submit" value="Go to your health tracker">
+    </form>
+    
     <form method="POST" action="/chatArea">
         <input type="submit" value="Chat Area">
     </form>
 
     <h1>
-        <center>Hello {{first_name}}</center>
+        <center>Welcome to Your Profile</center>
+        <center>Hello, {{first_name}}</center>
     </h1>
     <div class="graph">
         <div class="column">
