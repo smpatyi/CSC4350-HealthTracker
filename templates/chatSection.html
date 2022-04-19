@@ -5,8 +5,17 @@
 </head>
 
 <body>
+    <form method="POST" action="/logout">
+
+        <p align="right">
+            <input type="submit" value="Logout">
+        </p>
+
+    </form>
     <center>
         Leave a question, respond to one, or just read what others think
+        <br>
+        Comments you have left (if any) are in bold and noted with -->
         <br>
 
         <form method="POST" action="/add_comment">
@@ -17,7 +26,13 @@
         </form>
 
         {% for i in range(total_comments) %}
+        {% if all_comments[i].comment == user_comments_array[i].comment %}
+        <div class="userComment">
+            <p>--> {{user_comments_array[i].comment}}</p>
+        </div>
+        {% else %}
         <p>{{all_comments[i].comment}}</p>
+        {% endif %}
         {% endfor %}
 
         <br>
