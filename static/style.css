@@ -37,10 +37,14 @@ h2 {
   padding: 5px;
 }
 
-body{
+.userComment {
+  font-weight: bold;
+}
+
+body {
   background-image: url("../static/backgrounds/balloon.jpg");
-  background-size:cover;
-  background-color:antiquewhite;
+  background-size: cover;
+  background-color: antiquewhite;
   font-family: verdana;
   cursor: pointer;
 }

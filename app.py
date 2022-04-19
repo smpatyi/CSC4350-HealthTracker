@@ -65,17 +65,16 @@ class UserInfo(db.Model):
     height = db.Column(db.String(120), nullable=False)
     weight = db.Column(db.Integer, nullable=False)
 
+
 class foods(db.Model):
     """
-    table to save foods that users ate 
+    table to save foods that users ate
     """
 
     __tablename__ = "foods"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False)
     ate_foods = db.Column(db.String(220), nullable=False)
-
-
 
 
 class Comments(db.Model):
@@ -179,18 +178,20 @@ def input_data():
     if flask.request.method == "POST":
         return flask.render_template("input_data.html")
 
+
 # page to your health tracker
 @app.route("/health_tracker", methods=["GET", "POST"])
 @login_required
 def health_tracker():
     user = current_user.username
-    
-    user_info_firstName = UserInfo.query.filter_by(username=user).first().first_name
-    
-    if flask.request.method == "POST":
-        return flask.render_template("health_tracker.html",
-        first_name=user_info_firstName,)
 
+    user_info_firstName = UserInfo.query.filter_by(username=user).first().first_name
+
+    if flask.request.method == "POST":
+        return flask.render_template(
+            "health_tracker.html",
+            first_name=user_info_firstName,
+        )
 
 
 @app.route("/add_new_food", methods=["POST"])
@@ -202,7 +203,7 @@ def add_new_food():
     user = current_user.username
     ate_foods = flask.request.form.get("ate_foods")
 
-    food_info = foods(username=user, ate_foods = ate_foods) 
+    food_info = foods(username=user, ate_foods=ate_foods)
     db.session.add(food_info)
     db.session.commit()
 
@@ -210,12 +211,11 @@ def add_new_food():
     food_list = []
     for i in food:
         food_list.append(i.ate_foods)
-        
+
     flask.flash("Added!")
-    return flask.render_template("health_tracker.html",
-    ate_foods=ate_foods, food_list=food_list)
-
-
+    return flask.render_template(
+        "health_tracker.html", ate_foods=ate_foods, food_list=food_list
+    )
 
 
 # adds the new data to the database
@@ -255,9 +255,16 @@ def add_new_data():
 def chatArea():
     if flask.request.method == "POST":
         all_comments = Comments.query.filter_by().all()
+        user_comments = Comments.query.filter_by(username=current_user.username).all()
+        user_comments_array = []
+        for i in user_comments:
+            user_comments_array.append(i)
         total_comments = len(all_comments)
     return flask.render_template(
-        "chatSection.html", all_comments=all_comments, total_comments=total_comments
+        "chatSection.html",
+        all_comments=all_comments,
+        total_comments=total_comments,
+        user_comments_array=user_comments_array,
     )
 
 
