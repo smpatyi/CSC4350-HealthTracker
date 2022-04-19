@@ -1,46 +1,47 @@
 <html>
-    <head>
-        <link rel="stylesheet" href="/static/healthtracker.css" />
-    </head>
-    
-    <body>
-        <form method="POST" action="/logout">
-        
-            <p align="right">
-                <input type="submit" value="Logout">
-            </p>
+  <head>
+    <link rel="stylesheet" href="/static/healthtracker.css" />
+  </head>
 
-        </form>
+  <body>
+    <form method="POST" action="/logout">
+      <p align="right">
+        <input type="submit" value="Logout" />
+      </p>
+    </form>
 
+    <h1>
+      <center>Welcome to your health tracker!</center>
+    </h1>
 
-        <h1> 
-            <center>Welcome to your health tracker!</center>
-        </h1>
-        
-    
-        
-        <form method="POST" action="/add_new_food">
-            <p>
-                <center><label for="food">Add the food you ate: </label> </center>
-                <center><input type="text" name="ate_foods" /> </center>
-                
-                
-                <center> <input type="submit" value="Submit" /></center>
-            
-            
-            </p>
-        </form>    
-        <h2> <center>here are the food you ate: {{first_name}}</center></h2>
-        {% for ele in food_list %}
-        <h2><center>{{ele}}</center></h2>
-        {% endfor %}
-        <form method="POST" action="/main">
-            <p>
-                <center><input type="submit" value="go back"></center>
-            </p>
-        </form>
-            
+    <form method="POST" action="/add_new_food">
+      <p>
+        <center><label for="food">Add the food you ate: </label></center>
+        <center><input type="text" name="ate_foods" /></center>
 
-    </body>
+        <center><input type="submit" value="Submit" /></center>
+      </p>
+    </form>
 
+    <form method="POST" action="/add_new_exercise">
+      <p>
+        <center>
+          <label for="exercise">Add the exercise you did: </label>
+        </center>
+        <center><input type="text" name="exercise_done" /></center>
+
+        <center><input type="submit" value="Submit" /></center>
+      </p>
+    </form>
+
+    <h2><center>here are the food you ate: {{first_name}}</center></h2>
+    {% for ele in food_list %}
+    <h2><center>{{ele}}</center></h2>
+    {% endfor %}
+    <form method="POST" action="/main">
+      <p>
+        <center><input type="submit" value="go back" /></center>
+      </p>
+    </form>
+  </body>
 </html>

@@ -214,6 +214,8 @@ def add_new_food():
     flask.flash("Added!")
     return flask.render_template("health_tracker.html",
     ate_foods=ate_foods, food_list=food_list)
+    
+@app.route("/add_new_exercise")
 
 
 
