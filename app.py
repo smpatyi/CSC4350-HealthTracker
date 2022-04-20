@@ -15,6 +15,7 @@ from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
 import display
+import datetime
 
 app = flask.Flask(__name__)
 
@@ -64,7 +65,10 @@ class UserInfo(db.Model):
     last_name = db.Column(db.String(120), nullable=False)
     height = db.Column(db.String(120), nullable=False)
     weight = db.Column(db.Integer, nullable=False)
-
+    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(120), nullable=False)
+    calories = db.Column(db.Integer, nullable=True)
+    date = db.Column(db.DateTime(timezone=True), onupdate=datetime.datetime.now())
 
 class foods(db.Model):
     """
@@ -242,6 +246,8 @@ def add_new_data():
             last_name=user_info.last_name,
             height=flask.request.form.get("height"),
             weight=flask.request.form.get("weight"),
+            calories = flask.request.form.get("calories"),
+            gender = flask.request.form.get("gender"),
         )
     )
     db.session.commit()
