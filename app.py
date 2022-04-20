@@ -68,6 +68,7 @@ class UserInfo(db.Model):
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(120), nullable=False)
     calories = db.Column(db.Integer, nullable=True)
+    
     date = db.Column(db.DateTime(timezone=True), onupdate=datetime.datetime.now())
 
 class foods(db.Model):
