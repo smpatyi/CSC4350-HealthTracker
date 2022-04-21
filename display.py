@@ -1,5 +1,6 @@
 import plotly.express as px
 import math
+import datetime
 
 def BMI(weight, height_string):
     height_string = height_string.rstrip("''")
@@ -8,7 +9,7 @@ def BMI(weight, height_string):
     bmi = (703*weight)/(height*height)
     return bmi
 
-def BMR(entry):
+def BMR(entry, weight):
     lean = 1
     genderNum = 1
     if entry.gender == "male":
@@ -27,7 +28,7 @@ def BMR(entry):
             lean = .9
         elif entry.age >= 19:
             lean = .95
-    return 1.55*((entry.weight/2.2)*genderNum*24*lean)
+    return 1.55*((weight/2.2)*genderNum*24*lean)
     
 
 def weight_display(user_info):
@@ -72,10 +73,36 @@ def calorie_display(user_info):
         if entry.calories is not None:
             calories.append(entry.calories)
         else:
-            bmr = BMR(entry)
+            bmr = BMR(entry, entry.weight)
             calories.append(bmr)
         date.append(entry.date)
     fig = px.line(x=date, y=calories, title="Calories")
     fig.update_layout(title_x=0.5, xaxis_title="Date", yaxis_title="Calories")
     graph = fig.to_html()
     return graph
+
+def estimate_BMI(user_info, calorie_intake):
+    bmi = []
+    bmr = 0
+    date = []
+    weights = []
+    weight = user_info[-1].weight
+    start = user_info[-1].date
+    extra_calories = 0
+    for entry in calorie_intake:
+        bmr = BMR(user_info[-1], weight)
+        extra_calories = entry - bmr
+        weight += extra_calories/3500
+        weights.append(weight)
+        bmi.append(BMI(weight, user_info[-1].height))
+        date.append(start)
+        start += datetime.timedelta(days=1)
+
+    fig = px.line(x=date, y=bmi, title="BMI")
+    fig.update_layout(title_x=0.5, xaxis_title="Date", yaxis_title="BMI")
+    graph1 = fig.to_html()
+
+    fig = px.line(x=date, y=weights, title="Weight")
+    fig.update_layout(title_x=0.5, xaxis_title="Date", yaxis_title="Weight")
+    graph2 = fig.to_html()
+    return graph1, graph2

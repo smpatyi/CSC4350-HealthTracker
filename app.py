@@ -308,6 +308,29 @@ def main():
         first_name=user_info_firstName,
     )
 
+@app.route("/estimate_graph", methods=["GET", "POST"])
+@login_required
+def esti():
+    if flask.request.method == 'POST':
+        user = current_user.username
+        user_info = UserInfo.query.filter_by(username=user).all()
+        if flask.request.form.get("calorie_intake") is not None:
+            calorie_intake_string = flask.request.form.get("calorie_intake").split(", ")
+            regex = re.compile("^[0-9]+$")
+            for calories in calorie_intake_string:
+                if not regex.match(calories):
+                    flask.flash("invalid input")
+                    return flask.render_template("estimate_graph.html")
+            calorie_intake = list(map(int, flask.request.form.get("calorie_intake").split(", ")))
+            esti, esti_weight = display.estimate_BMI(user_info, calorie_intake)
+        return flask.render_template(
+            "estimate_graph.html",
+            esti=esti,
+            esti_weight=esti_weight,
+        )
+    else:
+        return flask.render_template("estimate_graph.html")
+
 
 # handles logic to log user out of app
 @app.route("/logout", methods=["GET", "POST"])
