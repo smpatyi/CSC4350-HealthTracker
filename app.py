@@ -68,7 +68,6 @@ class UserInfo(db.Model):
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(120), nullable=False)
     calories = db.Column(db.Integer, nullable=True)
-    
     date = db.Column(db.DateTime(timezone=True), onupdate=datetime.datetime.now())
 
 class foods(db.Model):
@@ -169,6 +168,8 @@ def signup():
                     last_name=flask.request.form.get("last_name"),
                     height=flask.request.form.get("height"),
                     weight=flask.request.form.get("weight"),
+                    age = flask.request.form.get("age"),
+                    gender = flask.request.form.get("gender")
                 )
             )
             db.session.commit()
@@ -249,6 +250,7 @@ def add_new_data():
             weight=flask.request.form.get("weight"),
             calories = flask.request.form.get("calories"),
             gender = flask.request.form.get("gender"),
+            age = user_info.age,
         )
     )
     db.session.commit()

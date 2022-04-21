@@ -3,3 +3,5 @@ __pycache__
 .vscode
 .DS_Store
 static/.DS_Store
+tempplates/testing_graph.html
+testing.py
