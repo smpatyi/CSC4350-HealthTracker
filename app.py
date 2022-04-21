@@ -68,7 +68,7 @@ class UserInfo(db.Model):
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(120), nullable=False)
     calories = db.Column(db.Integer, nullable=True)
-    date = db.Column(db.DateTime(timezone=True), onupdate=datetime.datetime.now())
+    date = db.Column(db.DateTime(timezone=True), default=datetime.datetime.now)
 
 class foods(db.Model):
     """
@@ -241,6 +241,10 @@ def add_new_data():
         flask.flash("weight value not viable")
         return flask.render_template("input_data.html")
 
+    if flask.request.form.get("calories") == "":
+        cal = None
+    else:
+        cal = flask.request.form.get("calories")
     db.session.add(
         UserInfo(
             username=user,
@@ -248,7 +252,7 @@ def add_new_data():
             last_name=user_info.last_name,
             height=flask.request.form.get("height"),
             weight=flask.request.form.get("weight"),
-            calories = flask.request.form.get("calories"),
+            calories = cal,
             gender = user_info.gender,
             age = user_info.age,
         )
@@ -300,6 +304,7 @@ def main():
         BMI=display.bmi_display(user_info),
         weight=display.weight_display(user_info),
         height=display.height_display(user_info),
+        calories=display.calorie_display(user_info),
         first_name=user_info_firstName,
     )
 

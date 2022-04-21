@@ -46,6 +46,7 @@ def height_display(user_info):
     date = []
     for entry in user_info:
         heights.append(entry.height)
+        print(entry.date)
         date.append(entry.date)
     fig = px.line(x=date, y=heights, title="Height")
     fig.update_layout(title_x=0.5, xaxis_title="Date", yaxis_title="Height")
@@ -68,7 +69,7 @@ def calorie_display(user_info):
     calories = []
     date = []
     for entry in user_info:
-        if not entry.calories is None:
+        if entry.calories is not None:
             calories.append(entry.calories)
         else:
             bmr = BMR(entry)
