@@ -19,3 +19,22 @@ body{
     font-family: verdana;
     cursor: pointer;
 }
+
+.buttons{
+    background-color: rgb(173, 1, 1);
+    color: white;
+    border: none;
+    height: 25px;
+    width: auto;
+    border-radius: 2px;
+    cursor: pointer;
+    }
+  
+    .main{
+      background-color: #4CAF50;
+    color: whitesmoke;
+    border: none;
+    height: 25px;
+    width: auto;
+    border-radius: 2px;
+    }

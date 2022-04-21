@@ -4,7 +4,6 @@ body {
 
 .header {
   padding: 30px;
-  background: #bffffb;
   color: rgb(0, 0, 0);
 }
 
@@ -18,6 +17,8 @@ body {
 
 h1 {
   text-align-last: center;
+  font-family: Copperplate, Papyrus, fantasy;
+  font-size: 50;
 }
 
 h2 {
@@ -48,3 +49,21 @@ body {
   font-family: verdana;
   cursor: pointer;
 }
+.buttons{
+  background-color: rgb(173, 1, 1);
+  color: white;
+  border: none;
+  height: 25px;
+  width: auto;
+  border-radius: 2px;
+  cursor: pointer;
+  }
+
+  .main{
+    background-color: #4CAF50;
+  color: whitesmoke;
+  border: none;
+  height: 25px;
+  width: auto;
+  border-radius: 2px;
+  }
