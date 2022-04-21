@@ -9,6 +9,7 @@ def BMI(weight, height_string):
     bmi = (703*weight)/(height*height)
     return bmi
 
+
 def BMR(entry, weight):
     lean = 1
     genderNum = 1
@@ -29,6 +30,7 @@ def BMR(entry, weight):
         elif entry.age >= 19:
             lean = .95
     return 1.55*((weight/2.2)*genderNum*24*lean)
+
     
 
 def weight_display(user_info):
@@ -47,7 +49,6 @@ def height_display(user_info):
     date = []
     for entry in user_info:
         heights.append(entry.height)
-        print(entry.date)
         date.append(entry.date)
     fig = px.line(x=date, y=heights, title="Height")
     fig.update_layout(title_x=0.5, xaxis_title="Date", yaxis_title="Height")
