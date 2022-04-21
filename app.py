@@ -249,7 +249,7 @@ def add_new_data():
             height=flask.request.form.get("height"),
             weight=flask.request.form.get("weight"),
             calories = flask.request.form.get("calories"),
-            gender = flask.request.form.get("gender"),
+            gender = user_info.gender,
             age = user_info.age,
         )
     )
