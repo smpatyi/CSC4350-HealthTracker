@@ -12,12 +12,22 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
+
+    <form method="POST" action="/logout">
+
+        <p align="right">
+            <input type="submit" value="Logout">
+        </p>
+
+    </form>
     <center>
         <form method="POST" action="/add_new_data">
             <br>
             Enter your updated height (Ex: 5'10): <input type="text" name="height" size="6">
             <br><br>
             Enter your updated weight (lb): <input type="text" name="weight" maxlength="3" size="6">
+            <br><br>
+            Enter calorie intake (optional): <input type="number" name="calories" maxlength="6" size="6">
             <br><br>
             <input type="submit" value="Add">
         </form>
