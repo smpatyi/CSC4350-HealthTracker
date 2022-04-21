@@ -268,16 +268,11 @@ def add_new_data():
 def chatArea():
     if flask.request.method == "POST":
         all_comments = Comments.query.filter_by().all()
-        user_comments = Comments.query.filter_by(username=current_user.username).all()
-        user_comments_array = []
-        for i in user_comments:
-            user_comments_array.append(i)
         total_comments = len(all_comments)
     return flask.render_template(
         "chatSection.html",
         all_comments=all_comments,
         total_comments=total_comments,
-        user_comments_array=user_comments_array,
     )
 
 

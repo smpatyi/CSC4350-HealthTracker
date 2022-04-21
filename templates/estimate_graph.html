@@ -7,20 +7,20 @@
 <body>
     <form method="POST" action="/logout">
         <p align="right">
-            <input type="submit" value="Logout">
+            <input type="submit" class = "buttons" value="Logout">
         </p>
     </form>
 
     <form method="POST" action="/input_data">
-        <input type="submit" value="Update profile data">
+        <input type="submit" class = "main" value="Update profile data">
     </form>
 
     <form method="POST" action="/health_tracker">
-        <input type="submit" value="Go to your health tracker">
+        <input type="submit" class = "main" value="Go to your health tracker">
     </form>
 
     <form method="POST" action="/chatArea">
-        <input type="submit" value="Chat area">
+        <input type="submit" class = "main" value="Chat area">
     </form>
 
     <h1>
@@ -40,10 +40,10 @@
         <br>
         Enter calories per day (Ex: 2500, 2600, 2000, ...): <input type="text" name="calorie_intake" size="10">
         <br><br>
-        <input type="submit" value="Estimate">
+        <input type="submit" class = "buttons" value="Estimate">
     </form>
     <form method="POST" action="/main">
-        <input type="submit" value="Return to main page">
+        <input type="submit" class = "buttons" value="Return to main page">
     </form>
     </center>
     {% if esti is defined %}
