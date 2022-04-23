@@ -1,5 +1,5 @@
 **Link to Heroku App**: 
-https://csc4350-health-tracker.herokuapp.com/
+https://health-tracker-sprint2.herokuapp.com/
 
 **Installation instructions**: 
 To run the project properly, clone all the files and make sure to install a couple of libraries by commands as follow
