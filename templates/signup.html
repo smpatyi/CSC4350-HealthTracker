@@ -23,7 +23,13 @@
         <input type="text" name="height" size="6" /> <br /><br />
         Enter your weight (lb):
         <input type="text" name="weight" maxlength="3" size="6" /> <br /><br />
-        <input type="submit" value="Register" />
+        Enter your age: <input type="number" name="age" maxlength="3" size="6">
+        <br><br>
+        <input type="radio" name="gender" value="male"> Male
+        <br><br>
+        <input type="radio" name="gender" value="female"> Female
+        <br><br>
+        <input type="submit" class = "buttons" value="Register" />
       </form>
       If you already have an account, please
       <a href="{{url_for('user_login')}}"> login</a>

@@ -5,24 +5,32 @@
 </head>
 
 <body>
+    <form method="POST" action="/logout">
+
+        <p align="right">
+            <input type="submit" class = "buttons" value="Logout">
+        </p>
+
+    </form>
     <center>
         Leave a question, respond to one, or just read what others think
         <br>
+        
 
         <form method="POST" action="/add_comment">
             <br>
             <textarea rows="3" cols="30" name="comment" placeholder="Leave a comment"></textarea>
             <br><br>
-            <input type="submit" value="Submit">
+            <input type="submit" class = "main" value="Submit">
         </form>
 
         {% for i in range(total_comments) %}
         <p>{{all_comments[i].comment}}</p>
-        {% endfor %}
+   {% endfor %}
 
         <br>
         <form method="POST" action="/main">
-            <input type="submit" value="Return to main page">
+            <input type="submit" class = "buttons" value="Return to main page">
             </p>
         </form>
     </center>

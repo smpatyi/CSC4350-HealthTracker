@@ -12,6 +12,14 @@
     {% endfor %}
     {% endif %}
     {% endwith %}
+
+    <form method="POST" action="/logout">
+
+        <p align="right">
+            <input type="submit" class = "buttons" value="Logout">
+        </p>
+
+    </form>
     <center>
         <form method="POST" action="/add_new_data">
             <br>
@@ -19,10 +27,12 @@
             <br><br>
             Enter your updated weight (lb): <input type="text" name="weight" maxlength="3" size="6">
             <br><br>
-            <input type="submit" value="Add">
+            Enter calorie intake (optional): <input type="number" name="calories" maxlength="6" size="6">
+            <br><br>
+            <input type="submit" class = "buttons" value="Add">
         </form>
         <form method="POST" action="/main">
-            <input type="submit" value="Return to main page">
+            <input type="submit" class = "buttons" value="Return to main page">
         </form>
     </center>
 </body>

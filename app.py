@@ -15,6 +15,7 @@ from dotenv import find_dotenv, load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from passlib.hash import sha256_crypt
 import display
+import datetime
 
 app = flask.Flask(__name__)
 
@@ -64,6 +65,10 @@ class UserInfo(db.Model):
     last_name = db.Column(db.String(120), nullable=False)
     height = db.Column(db.String(120), nullable=False)
     weight = db.Column(db.Integer, nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(120), nullable=False)
+    calories = db.Column(db.Integer, nullable=True)
+    date = db.Column(db.DateTime(timezone=True), default=datetime.datetime.now)
 
 
 class Foods(db.Model):
@@ -82,8 +87,8 @@ class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False)
     exercise = db.Column(db.String(120), nullable=False)
-
-
+    
+    
 class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False)
@@ -171,6 +176,8 @@ def signup():
                     last_name=flask.request.form.get("last_name"),
                     height=flask.request.form.get("height"),
                     weight=flask.request.form.get("weight"),
+                    age = flask.request.form.get("age"),
+                    gender = flask.request.form.get("gender")
                 )
             )
             db.session.commit()
@@ -265,6 +272,10 @@ def add_new_data():
         flask.flash("weight value not viable")
         return flask.render_template("input_data.html")
 
+    if flask.request.form.get("calories") == "":
+        cal = None
+    else:
+        cal = flask.request.form.get("calories")
     db.session.add(
         UserInfo(
             username=user,
@@ -272,6 +283,9 @@ def add_new_data():
             last_name=user_info.last_name,
             height=flask.request.form.get("height"),
             weight=flask.request.form.get("weight"),
+            calories = cal,
+            gender = user_info.gender,
+            age = user_info.age,
         )
     )
     db.session.commit()
@@ -287,7 +301,9 @@ def chat_area():
         all_comments = Comments.query.filter_by().all()
         total_comments = len(all_comments)
     return flask.render_template(
-        "chatSection.html", all_comments=all_comments, total_comments=total_comments
+        "chatSection.html",
+        all_comments=all_comments,
+        total_comments=total_comments,
     )
 
 
@@ -314,8 +330,32 @@ def main():
         BMI=display.bmi_display(user_info),
         weight=display.weight_display(user_info),
         height=display.height_display(user_info),
+        calories=display.calorie_display(user_info),
         first_name=user_info_first_name,
     )
+
+@app.route("/estimate_graph", methods=["GET", "POST"])
+@login_required
+def esti():
+    if flask.request.method == 'POST':
+        user = current_user.username
+        user_info = UserInfo.query.filter_by(username=user).all()
+        if flask.request.form.get("calorie_intake") is not None:
+            calorie_intake_string = flask.request.form.get("calorie_intake").split(", ")
+            regex = re.compile("^[0-9]+$")
+            for calories in calorie_intake_string:
+                if not regex.match(calories):
+                    flask.flash("invalid input")
+                    return flask.render_template("estimate_graph.html")
+            calorie_intake = list(map(int, flask.request.form.get("calorie_intake").split(", ")))
+            esti, esti_weight = display.estimate_BMI(user_info, calorie_intake)
+        return flask.render_template(
+            "estimate_graph.html",
+            esti=esti,
+            esti_weight=esti_weight,
+        )
+    else:
+        return flask.render_template("estimate_graph.html")
 
 
 # handles logic to log user out of app
