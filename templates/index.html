@@ -1,10 +1,9 @@
 <html>
-
-<head>
+  <head>
     <link rel="stylesheet" href="/static/style.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <form method="POST" action="/logout">
         <p align="right">
             <input type="submit" class = "buttons" value="Logout">
@@ -17,6 +16,10 @@
 
     <form method="POST" action="/health_tracker">
         <input type="submit" class = "main" value="Go to your health tracker">
+    </form>
+  
+    <form method="GET" action="/add_exercises">
+      <input type="submit" value="Add Exercises" />
     </form>
 
     <form method="GET" action="/estimate_graph">
@@ -43,8 +46,7 @@
         </div>
         <div class="column">
             {{calories|safe}}
-        </div>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>

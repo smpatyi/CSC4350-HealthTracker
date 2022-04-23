@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <form method="POST" action="/logout">
+      <p align="right">
+        <input type="submit" value="Logout" />
+      </p>
+    </form>
+
+    <h1>
+      <center>Welcome to your exercise or workout tracker!</center>
+    </h1>
+
+    <form method="POST" action="/add_exercises">
+      <p>
+        <center>
+          <label for="exercise">Add the exercises you have done: </label>
+        </center>
+        <center><input type="text" name="exercise" id="exercise" /></center>
+
+        <center><input type="submit" value="Submit" /></center>
+      </p>
+    </form>
+    <h2>
+      <center>Here are the exercises you have done:</center>
+    </h2>
+    {% for ele in exercise_list %}
+    <h2><center>{{ele}}</center></h2>
+    {% endfor %}
+    <form method="POST" action="/main">
+      <p>
+        <center><input type="submit" value="go back" /></center>
+      </p>
+    </form>
+  </body>
+</html>

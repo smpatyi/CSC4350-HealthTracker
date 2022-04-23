@@ -70,7 +70,8 @@ class UserInfo(db.Model):
     calories = db.Column(db.Integer, nullable=True)
     date = db.Column(db.DateTime(timezone=True), default=datetime.datetime.now)
 
-class foods(db.Model):
+
+class Foods(db.Model):
     """
     table to save foods that users ate
     """
@@ -81,6 +82,13 @@ class foods(db.Model):
     ate_foods = db.Column(db.String(220), nullable=False)
 
 
+# database for the exercises a person does
+class Exercise(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), nullable=False)
+    exercise = db.Column(db.String(120), nullable=False)
+    
+    
 class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False)
@@ -191,12 +199,12 @@ def input_data():
 def health_tracker():
     user = current_user.username
 
-    user_info_firstName = UserInfo.query.filter_by(username=user).first().first_name
+    user_info_first_name = UserInfo.query.filter_by(username=user).first().first_name
 
     if flask.request.method == "POST":
         return flask.render_template(
             "health_tracker.html",
-            first_name=user_info_firstName,
+            first_name=user_info_first_name,
         )
 
 
@@ -209,11 +217,11 @@ def add_new_food():
     user = current_user.username
     ate_foods = flask.request.form.get("ate_foods")
 
-    food_info = foods(username=user, ate_foods=ate_foods)
+    food_info = Foods(username=user, ate_foods=ate_foods)
     db.session.add(food_info)
     db.session.commit()
 
-    food = foods.query.filter_by(username=user).all()
+    food = Foods.query.filter_by(username=user).all()
     food_list = []
     for i in food:
         food_list.append(i.ate_foods)
@@ -222,6 +230,29 @@ def add_new_food():
     return flask.render_template(
         "health_tracker.html", ate_foods=ate_foods, food_list=food_list
     )
+
+
+# app route to add exercises/workouts
+@app.route("/add_exercises", methods=["GET", "POST"])
+@login_required
+def add_exercise():
+    user = current_user.username
+    exercises = Exercise.query.filter_by(username=user).all()
+
+    if flask.request.method == "POST":
+        exercise = flask.request.form.get("exercise")
+
+        exercise_info = Exercise(username=user, exercise=exercise)
+        db.session.add(exercise_info)
+        db.session.commit()
+
+        # flask.flash("Added!")
+
+    exercise_list = []
+    for i in exercises:
+        exercise_list.append(i.exercise)
+
+    return flask.render_template("exercise.html", exercise_list=exercise_list)
 
 
 # adds the new data to the database
@@ -265,7 +296,7 @@ def add_new_data():
 # displays Chat Area page
 @app.route("/chatArea", methods=["GET", "POST"])
 @login_required
-def chatArea():
+def chat_area():
     if flask.request.method == "POST":
         all_comments = Comments.query.filter_by().all()
         total_comments = len(all_comments)
@@ -293,14 +324,14 @@ def add_comment():
 def main():
     user = current_user.username
     user_info = UserInfo.query.filter_by(username=user).all()
-    user_info_firstName = UserInfo.query.filter_by(username=user).first().first_name
+    user_info_first_name = UserInfo.query.filter_by(username=user).first().first_name
     return flask.render_template(
         "index.html",
         BMI=display.bmi_display(user_info),
         weight=display.weight_display(user_info),
         height=display.height_display(user_info),
         calories=display.calorie_display(user_info),
-        first_name=user_info_firstName,
+        first_name=user_info_first_name,
     )
 
 @app.route("/estimate_graph", methods=["GET", "POST"])
