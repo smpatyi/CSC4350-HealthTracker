@@ -1,43 +1,39 @@
 <html>
-
-<head>
+  <head>
     <link rel="stylesheet" href="/static/style.css" />
-</head>
+  </head>
 
-<body>
+  <body>
     <form method="POST" action="/logout">
-        <p align="right">
-            <input type="submit" value="Logout">
-        </p>
+      <p align="right">
+        <input type="submit" value="Logout" />
+      </p>
     </form>
 
     <form method="POST" action="/input_data">
-        <input type="submit" value="Add Data">
+      <input type="submit" value="Add Data" />
     </form>
 
     <form method="POST" action="/health_tracker">
-        <input type="submit" value="Go to your health tracker">
+      <input type="submit" value="Go to your health tracker" />
     </form>
-    
+
+    <form method="GET" action="/add_exercises">
+      <input type="submit" value="Add Exercises" />
+    </form>
+
     <form method="POST" action="/chatArea">
-        <input type="submit" value="Chat Area">
+      <input type="submit" value="Chat Area" />
     </form>
 
     <h1>
-        <center>Welcome to Your Profile</center>
-        <center>Hello, {{first_name}}</center>
+      <center>Welcome to Your Profile</center>
+      <center>Hello, {{first_name}}</center>
     </h1>
     <div class="graph">
-        <div class="column">
-            {{BMI|safe}}
-        </div>
-        <div class="column">
-            {{height|safe}}
-        </div>
-        <div class="column">
-            {{weight|safe}}
-        </div>
+      <div class="column">{{BMI|safe}}</div>
+      <div class="column">{{height|safe}}</div>
+      <div class="column">{{weight|safe}}</div>
     </div>
-</body>
-
+  </body>
 </html>

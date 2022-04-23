@@ -77,6 +77,13 @@ class Foods(db.Model):
     ate_foods = db.Column(db.String(220), nullable=False)
 
 
+# database for the exercises a person does
+class Exercise(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), nullable=False)
+    exercise = db.Column(db.String(120), nullable=False)
+
+
 class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), nullable=False)
@@ -216,6 +223,29 @@ def add_new_food():
     return flask.render_template(
         "health_tracker.html", ate_foods=ate_foods, food_list=food_list
     )
+
+
+# app route to add exercises/workouts
+@app.route("/add_exercises", methods=["GET", "POST"])
+@login_required
+def add_exercise():
+    user = current_user.username
+    exercises = Exercise.query.filter_by(username=user).all()
+
+    if flask.request.method == "POST":
+        exercise = flask.request.form.get("exercise")
+
+        exercise_info = Exercise(username=user, exercise=exercise)
+        db.session.add(exercise_info)
+        db.session.commit()
+
+        # flask.flash("Added!")
+
+    exercise_list = []
+    for i in exercises:
+        exercise_list.append(i.exercise)
+
+    return flask.render_template("exercise.html", exercise_list=exercise_list)
 
 
 # adds the new data to the database
